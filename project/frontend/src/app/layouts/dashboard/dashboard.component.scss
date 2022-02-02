@@ -1,0 +1,27 @@
+.wrapper {
+    background-color: var(--dashboard-bg-color);
+
+    .main-panel {
+        position: fixed;
+        left: var(--sidebar-width);
+        top: var(--navbar-height);
+        right: 0;
+        bottom: 0;
+        background-color: var(--dashboard-bg-color);
+
+        .breadcrumb {
+            position: relative;
+            height: 35px;
+            width: 100%;
+            background-color: #FAFAFA;
+            box-shadow: 0px 1px 3px 0px rgba(#3c3c3c, 0.20);
+        }
+
+        .dashboard-subpage {
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            padding: 20px;
+        }
+    }
+}

@@ -1,0 +1,80 @@
+<div class="card">
+    <div class="card-header">
+        <!-- <button mat-button class="header-button" routerLink="/users/create-user">
+            <mat-icon class="button-icon">notifications</mat-icon>
+            <span class="button-label">ADD USER</span>
+        </button> -->
+    </div>
+
+    <div class="card-body">
+        <div class="filter-bar">
+            <mat-icon class="filter-bar-icon">search</mat-icon>
+
+            <form class="filter-bar-form" [formGroup]="visitsToServicesFiltersFormGroup">
+                <mat-form-field style="width: 50%;">
+                    <mat-label>Service</mat-label>
+                    <mat-select formControlName="serviceId">
+                        <mat-option [value]="''">All</mat-option>
+                        <mat-option [value]="'1'">Serving drinks at the bar</mat-option>
+                        <mat-option [value]="'2'">Serving food/drinks at the restaurant</mat-option>
+                        <mat-option [value]="'3'">Barber services</mat-option>
+                        <mat-option [value]="'4'">Gym services</mat-option>
+                        <mat-option [value]="'5'">Sauna services</mat-option>
+                        <mat-option [value]="'6'">Conference room services</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="minCost" placeholder="Min Cost" (keyup.enter)="updateTable()">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="maxCost" placeholder="Max Cost" (keyup.enter)="updateTable()">
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div>
+            <table mat-table matSort [dataSource]="visitsToServicesDatasource">
+                <ng-container matColumnDef="NFC_ID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>NFC ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.NFC_ID}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="service_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Service ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.service_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="service_desc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Service Description</th>
+                    <td mat-cell *matCellDef="let row"> {{row.service_desc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="entry_datetime">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Entry Date/Time</th>
+                    <td mat-cell *matCellDef="let row"> {{ Auxiliary.getFormattedDate(row.entry_datetime) }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="exit_datetime">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Exit Date/Time</th>
+                    <td mat-cell *matCellDef="let row"> {{ Auxiliary.getFormattedDate(row.exit_datetime) }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="charge_amount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cost</th>
+                    <td mat-cell *matCellDef="let row"> {{ row.charge_amount }} € </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <!-- <tr mat-row class="hoverable-table-row" *matRowDef="let row; columns: displayedColumns;" routerLink="/users/edit-user" [state]="{data: row}"></tr> -->
+                <tr mat-row class="hoverable-table-row" *matRowDef="let row; columns: displayedColumns;" [state]="{data: row}"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="updateTable()"></mat-paginator>
+        </div>
+    </div>
+</div>

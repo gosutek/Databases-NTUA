@@ -1,0 +1,14 @@
+<div class="navbar-wrapper">
+    <div class="logo"></div>
+    <div class="vertical-divider"></div>
+    <div class="navbar-title">{{ getTitle() }}</div>
+    <div class="user-menu" [matMenuTriggerFor]="userAccountMenu">
+        <div class="user-menu-icon"></div>
+        <div class="user-menu-label"></div>
+        <div class="user-menu-dropdown-icon"></div>
+    </div>
+
+    <mat-menu #userAccountMenu="matMenu">
+        <button mat-menu-item (click)="logoutUser()">Logout</button>
+    </mat-menu>
+</div>

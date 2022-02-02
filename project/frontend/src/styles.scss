@@ -1,0 +1,277 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+//CSS Variables
+:root {
+    //Dimensions
+    --navbar-height: 90px;
+    --sidebar-width: 260px;
+    --sidebar-link-height: 35px;
+
+    //Colors
+    --sidebar-bg-color: #2A303D;
+    --navbar-bg-color: #3D4351;
+    --button-bg-color: #363C47;
+    --button-table-header-bg-color: #515867;
+    --white-color: #fefefe;
+    --black-color: #303945;
+    --grey-title-color: #e0dcdc;
+    --dashboard-bg-color: #EEEEEE;
+}
+
+html {
+    background-color: #ebebeb;
+}
+
+//Scrollbar
+/* Custom scrollbar for Chrome/IE */
+*::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    background: #f4f0f0;
+}
+
+*::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f4f0f0;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #c6c6c6;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #939292;
+}
+
+/* Custom scrollbar for Firefox */
+@-moz-document url-prefix() {
+    * {
+        scrollbar-width: thin;
+    }
+}
+
+//Image
+%image-base-style {
+    background-repeat:no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+//Menus
+.mat-menu-panel {
+    min-height: 45px !important;
+}
+
+.mat-menu-item {
+  line-height:40px !important;
+  height:40px !important;
+}
+
+//Buttons
+.base-button {
+    background-color: var(--button-bg-color);
+    color: var(--white-color);
+    .button-icon {
+        margin-right: 8px;
+        color: var(--white-color);
+    }
+
+    .button-label {
+        color: var(--white-color);
+    }
+}
+
+//Card
+.card {
+    position: relative;
+    width: 100%;
+
+    .card-header {
+        position: relative;
+        left: 50%;
+        height: 80px;
+        width: calc(100% - 20px);
+        transform: translateX(-50%);
+        background-color: #3D4351;
+        border-radius: 6px;
+        z-index: 10;
+        margin: 0;
+
+        .header-button {
+            @extend .base-button;
+            position: relative;
+            left: 24px;
+            top: 50%;
+            height: 60%;
+            transform: translateY(-50%);
+            background-color: var(--button-table-header-bg-color);
+        }
+
+        .header-back-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            cursor: pointer;
+            outline: 0;
+        }
+
+        .header-title {
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: var(--white-color);
+        }
+    }
+
+    .card-body {
+        position: relative;
+        top: -55px;
+        background-color: var(--white-color);
+        border-radius: 6px 6px 6px 6px;
+        min-height: 100px;
+        padding: 65px 10px 10px 10px;
+        // padding: 80px 100px 20px 100px;
+
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 16px;
+
+            .filter-icon {
+
+            }
+
+            form {
+                display: flex;
+                align-items: center;
+
+                mat-form-field {
+                    margin-left: 18px;
+                }
+            }
+        }
+
+        //Forms
+        .form-component {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            flex-wrap: wrap;
+            // margin: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            mat-form-field {
+                // padding-left: 20px;
+                // padding-right: 20px;
+                // font-size: 15px;
+            }
+        }
+    }
+
+    .card-footer {
+        position: relative;
+        background: var(--white-color);
+        top: -55px;
+        height: 70px;
+        border-radius: 0 0 6px 6px;
+
+        %footer-button {
+            @extend .base-button;
+            position: absolute;
+            top: 50%;
+            height: 44px;
+            transform: translateY(-50%);
+        }
+
+        .footer-button-left {
+            @extend %footer-button;
+            left: 20px;
+        }
+
+        .footer-button-right {
+            @extend %footer-button;
+            right: 20px;
+        }
+    }
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    padding: 0 20px;
+
+    .hoverable-table-row:hover {
+        cursor: pointer;
+        background-color: whitesmoke;
+    }
+
+    tr {
+        outline: 0;
+    }
+
+    td, th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .table-icon {
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}
+
+.table-title {
+    font-size: 18px;
+    margin-left: 30px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+//Progress Spinner
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: var(--white-color);
+}
+
+//Checkboxes
+.mat-checkbox-checkmark-path {
+    border-color: black;
+    stroke: black !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: transparent !important;
+    font-size: 30px;
+}
+
+.mat-checkbox-ripple{
+    display:none;
+}
+
+.mat-checkbox .mat-checkbox-frame {
+    border-color: #393939 !important;
+    border-width: 1px;
+    transform: scale(1.1);
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+     transform: scale(1);
+}

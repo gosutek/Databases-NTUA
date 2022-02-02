@@ -1,0 +1,23 @@
+<div class="sidebar-wrapper">
+    <!-- <div class="logo">
+        <div class="logo-img">
+            <img src="/assets/images/icons/logos/interrface-logo.png"/>
+        </div>
+    </div> -->
+    <!-- <ul class="sidebar-links-list">
+        <li routerLinkActive="active" *ngFor="let sidebarRoute of sidebarRoutes" class="sidebar-link">
+            <a [routerLink]="[sidebarRoute.path]">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">{{sidebarRoute.icon}}</mat-icon>
+                <p>{{sidebarRoute.title}}</p>
+            </a>
+        </li>
+    </ul> -->
+    <div class="sidebar-links">
+        <div class="sidebar-links-title">ACTIONS</div>
+        <div *ngFor="let sidebarRoute of sidebarRoutes" class="sidebar-link" routerLinkActive="sidebar-link-active" [routerLink]="[sidebarRoute.path]">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">{{sidebarRoute.icon}}</mat-icon>
+            <p>{{sidebarRoute.title}}</p>
+        </div>
+    </div>
+
+</div>

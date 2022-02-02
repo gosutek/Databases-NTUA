@@ -1,0 +1,69 @@
+7
+SELECT visits.NFC_ID,venues.service_id,services.service_desc,visits.entry_datetime,visits.exit_datetime,receive_services.charge_amount
+FROM visits,venues,receive_services,services
+WHERE visits.venue_id=venues.venue_id
+AND venues.service_id=services.service_id
+AND visits.NFC_ID=receive_services.NFC_ID
+AND venues.service_id=receive_services.service_id
+AND receive_services.charge_datetime BETWEEN visits.entry_datetime AND visits.exit_datetime
+AND venues.service_id=1 
+AND visits.entry_datetime BETWEEN '2021-06-18 00:00:00' AND '2021-06-18 23:59:59' 
+AND receive_services.charge_amount < 40
+AND receive_services.charge_amount > 10
+
+
+9
+select visits.NFC_ID,venues.venue_id,venues.venue_name,venues.venue_desc,venues.venue_floor,visits.entry_datetime,visits.exit_datetime
+FROM venues,visits 
+WHERE visits.NFC_ID=2 
+AND visits.venue_id=venues.venue_id
+AND visits.entry_datetime BETWEEN '2021-06-14 00:00:00' AND '2021-06-14 23:59:59'
+
+10
+SELECT clients.NFC_ID,clients.first_name,clients.last_name,client_identification.id_no,client_identification.id_type, client_identification.id_issuingauthority,
+GROUP_CONCAT(DISTINCT client_phones.phone_no SEPARATOR ',') AS phones, 
+GROUP_CONCAT(DISTINCT client_email.email SEPARATOR ',') AS emails  
+FROM (SELECT * FROM visits WHERE visits.NFC_ID=2) AS A ,(SELECT * FROM visits WHERE visits.NFC_ID!=2) AS B,clients,client_email,client_phones,client_identification  
+WHERE (B.entry_datetime <= DATE_ADD(A.exit_datetime, INTERVAL 1 HOUR)) 
+AND (B.exit_datetime >= A.entry_datetime) 
+AND clients.NFC_ID=client_email.NFC_ID 
+AND clients.NFC_ID=client_phones.NFC_ID 
+AND clients.NFC_ID=client_identification.NFC_ID 
+AND clients.NFC_ID=B.NFC_ID 
+AND clients.first_name = 'first_name'
+AND clients.last_name = 'last_name'
+AND clients.id_no = 'id_no'
+GROUP BY clients.NFC_ID,client_identification.id_no
+
+11
+a
+SELECT venues.venue_id,venues.venue_name,venues.venue_floor, COUNT(venues.venue_id) AS number_of_visits
+FROM visits,venues,clients
+WHERE venues.venue_id=visits.venue_id
+AND clients.NFC_ID=visits.NFC_ID 
+AND visits.entry_datetime BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() 
+AND clients.dob BETWEEN DATE_SUB(NOW(), INTERVAL 40 YEAR) AND DATE_SUB(NOW(), INTERVAL 20 YEAR) 
+GROUP BY venues.venue_id
+ORDER BY number_of_visits DESC
+
+b
+SELECT services.service_id,services.service_desc, COUNT(services.service_id) AS number_of_visits
+FROM visits,venues,clients,services
+WHERE venues.venue_id=visits.venue_id
+AND clients.NFC_ID=visits.NFC_ID 
+AND venues.service_id=services.service_id
+AND visits.entry_datetime BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() 
+AND clients.dob BETWEEN DATE_SUB(NOW(), INTERVAL 40 YEAR) AND DATE_SUB(NOW(), INTERVAL 20 YEAR) 
+GROUP BY services.service_id
+ORDER BY number_of_visits DESC
+
+c
+SELECT services.service_id,services.service_desc, COUNT(DISTINCT clients.NFC_ID) AS number_of_visits
+FROM visits,venues,clients,services
+WHERE venues.venue_id=visits.venue_id
+AND clients.NFC_ID=visits.NFC_ID 
+AND venues.service_id=services.service_id
+AND visits.entry_datetime BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW() 
+AND clients.dob BETWEEN DATE_SUB(NOW(), INTERVAL 40 YEAR) AND DATE_SUB(NOW(), INTERVAL 20 YEAR) 
+GROUP BY services.service_id
+ORDER BY number_of_visits DESC

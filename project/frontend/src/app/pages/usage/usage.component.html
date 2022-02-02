@@ -1,0 +1,89 @@
+<div class="card">
+    <div class="card-header">
+    </div>
+
+    <div class="card-body">
+        <div class="filter-bar">
+            <mat-icon class="filter-bar-icon">search</mat-icon>
+
+            <form class="filter-bar-form" [formGroup]="usageFiltersFormGroup">
+                <mat-form-field style="width: 50%;">
+                    <mat-label>Time Range</mat-label>
+                    <mat-select formControlName="time_range">
+                        <mat-option [value]="''">All</mat-option>
+                        <mat-option [value]="'month'">Last Month</mat-option>
+                        <mat-option [value]="'year'">Last Year</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="width: 50%;">
+                    <mat-label>Age</mat-label>
+                    <mat-select formControlName="age">
+                        <mat-option [value]="''">All</mat-option>
+                        <mat-option [value]="'20-40'">20-40</mat-option>
+                        <mat-option [value]="'41-60'">41-60</mat-option>
+                        <mat-option [value]="'61plus'">61+</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="width: 50%;">
+                    <mat-label>Usage</mat-label>
+                    <mat-select formControlName="usage">
+                        <mat-option [value]="'venues'">Most Used Places</mat-option>
+                        <mat-option [value]="'services'">Most Used Services</mat-option>
+                        <mat-option [value]="'services_unique_clients'">Most Unique Clients</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div *ngIf='selectedUsage == "venues"'>
+            <table mat-table matSort [dataSource]="venueUsageDatasource">
+                <ng-container matColumnDef="venue_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Venue ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.venue_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="venue_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Venue Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.venue_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="venue_floor">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Floor</th>
+                    <td mat-cell *matCellDef="let row"> {{row.venue_floor}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="number_of_visits">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Number Of Visits</th>
+                    <td mat-cell *matCellDef="let row"> {{row.number_of_visits}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsVenues"></tr>
+                <tr mat-row class="hoverable-table-row" *matRowDef="let row; columns: displayedColumnsVenues;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="updateTable()"></mat-paginator>
+        </div>
+
+        <div *ngIf='selectedUsage != "venues"'>
+            <table mat-table matSort [dataSource]="serviceUsageDatasource">
+                <ng-container matColumnDef="service_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Service ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.service_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="service_desc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                    <td mat-cell *matCellDef="let row"> {{row.service_desc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="number_of_visits">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ selectedUsage=='services' ? 'Number Of Visits' : 'Unique Clients' }}</th>
+                    <td mat-cell *matCellDef="let row"> {{row.number_of_visits}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsServices"></tr>
+                <tr mat-row class="hoverable-table-row" *matRowDef="let row; columns: displayedColumnsServices;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 50, 100]" (page)="updateTable()"></mat-paginator>
+        </div>
+    </div>
+</div>
